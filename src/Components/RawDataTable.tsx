@@ -151,6 +151,7 @@ const RawDataTable: React.FC<RawDataTableProps> = ({recList, model, refreshModel
                       sx={{
                           "& .maturity-date.urgent-highlight": {
                               backgroundColor: 'warning.dark',
+                              color: 'warning.contrastText'
                           }
                       }}
                       initialState={{
