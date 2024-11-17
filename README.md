@@ -13,8 +13,12 @@
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/benjaminye36/investment-tracker/main)](https://github.com/BenjaminYe36/investment-tracker/commits/main/)
 [![GitHub License](https://img.shields.io/github/license/benjaminye36/investment-tracker)](https://github.com/BenjaminYe36/investment-tracker/blob/main/LICENSE)
 
-## Changes & Features
-- Polished up for a public release v1.5.0
+## Recent changes
+- Updated formula for interest estimation (better results for longer terms)
+- Added mark in the middle interest payout as confirmed feature (so that it won't block the other entries)
+- some color contrast fix (text & icon with background)
+
+## Features
 - Quick filtering by owner, marketplace, bank, and start & end time within the side drawer
 - Interactive data grid (edit, delete, hide, sort, filter) to show the records
 - Autocomplete based on current records when adding new records
@@ -26,7 +30,8 @@
 <p align="left">
   <img alt='Investment Tracker Screenshot d1' src='./public/investment-tracker-d-1.png'/>
   <img alt='Investment Tracker Screenshot d2' src='./public/investment-tracker-d-2.png'/>
-  <img alt='Investment Tracker Screenshot d3' src='./public/investment-tracker-d-3.png'/>
+  <img alt='Investment Tracker Screenshot d3' src='./public/investment-tracker-d-3.jpeg'/>
+  <img alt='Investment Tracker Screenshot d4' src='./public/investment-tracker-d-4.png'/>
   <img alt='Investment Tracker Screenshot l1' src='./public/investment-tracker-l-1.png'/>
   <img alt='Investment Tracker Screenshot l1' src='./public/investment-tracker-l-2.png'/>
   <img alt='Investment Tracker Screenshot 13' src='./public/investment-tracker-l-3.png'/>
