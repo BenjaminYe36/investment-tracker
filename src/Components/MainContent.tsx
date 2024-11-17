@@ -12,6 +12,7 @@ import RawDataTable from "./RawDataTable.tsx";
 import dayjs, {Dayjs} from "dayjs";
 import {TabContext, TabList} from "@mui/lab";
 import GetMoneyDateTable from "./GetMoneyDateTable.tsx";
+import Util from "../Model & Util/Util.ts";
 
 interface MainContentProps {
     recList: InvestmentRecord[]; // List of investment record data
@@ -88,8 +89,9 @@ const MainContent: React.FC<MainContentProps> = ({
     let getMoneyList: GetMoneyRecord[] = [];
     recList.forEach((rec) => {
         if (rec.couponFreq === CouponFreqStr.maturity) {
+            const interestYears = dayjs(rec.maturityDate).diff(dayjs(rec.startDate), 'year', true);
             const interestDays = dayjs(rec.maturityDate).diff(dayjs(rec.startDate), 'day');
-            const interest = rec.quantity * rec.couponRate * interestDays / 365;
+            const interest = Util.getAnnuallyCompoundInterest(rec.quantity, rec.couponRate, interestYears, interestDays);
             getMoneyList.push({
                 getMoneyDate: rec.maturityDate,
                 getMoneyType: GetMoneyTypeStr.mature,
@@ -102,8 +104,9 @@ const MainContent: React.FC<MainContentProps> = ({
             let currentStartDate = dayjs(rec.startDate);
             let currentCouponDate = dayjs(rec.firstCouponDate);
             while (currentCouponDate.isBefore(dayjs(rec.maturityDate), 'date')) {
+                const interestYears = currentCouponDate.diff(currentStartDate, 'year', true);
                 const interestDays = currentCouponDate.diff(currentStartDate, 'day');
-                const interest = rec.quantity * rec.couponRate * interestDays / 365;
+                const interest = Util.getAnnuallyCompoundInterest(rec.quantity, rec.couponRate, interestYears, interestDays);
                 getMoneyList.push({
                     getMoneyDate: currentCouponDate.toISOString(),
                     getMoneyType: GetMoneyTypeStr.interest,
