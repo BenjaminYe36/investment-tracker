@@ -23,6 +23,8 @@ export interface InvestmentRecord {
     maturityDate: string; // ISO format date string for product maturity date
     firstCouponDate: string; // ISO format date string for the product first coupon date
     couponFreq: CouponFreqStr; // how frequent the interest is credited
+    // ISO format date string[], recording which interest payouts are confirmed (and will be collapsed)
+    confirmedInterestDates?: string[];
 }
 
 export interface GetMoneyRecord {
@@ -67,7 +69,53 @@ class ModelAPI {
         this.recList = this.recList.map((rec) => {
             if (rec.id === updatedRec.id) {
                 console.log("update successful");
+                // Check for if there's changes in date or coupon freq fields,
+                // need to clear its confirmedInterestDates field
+                if (rec.couponFreq !== updatedRec.couponFreq || rec.startDate !== updatedRec.startDate ||
+                    rec.maturityDate !== updatedRec.maturityDate ||
+                    rec.firstCouponDate !== updatedRec.firstCouponDate) {
+                    delete updatedRec.confirmedInterestDates;
+                }
                 return updatedRec;
+            }
+            return rec;
+        });
+        this.writeToJson();
+    }
+
+    public addConfirmedInterestDate(id: string, date: string) {
+        this.recList = this.recList.map((rec) => {
+            if (rec.id === id) {
+                console.log("update successful");
+                if (rec.confirmedInterestDates === undefined) { // no existing array, make a new one containing this date
+                    return {...rec, confirmedInterestDates: [date]};
+                } else { // add to existing array
+                    return {...rec, confirmedInterestDates: [...rec.confirmedInterestDates, date]};
+                }
+            }
+            return rec;
+        });
+        this.writeToJson();
+    }
+
+    public removeConfirmedInterestDate(id: string, date: string) {
+        this.recList = this.recList.map((rec) => {
+            if (rec.id === id) {
+                if (rec.confirmedInterestDates === undefined) { // no existing array
+                    console.error("No array to remove");
+                    return rec;
+                } else { // remove from existing array
+                    const newArr = rec.confirmedInterestDates.filter((d) => d !== date);
+                    // if no dates left in arr, delete this field
+                    if (newArr.length === 0) {
+                        delete rec.confirmedInterestDates;
+                        return rec;
+                    }
+                    return {
+                        ...rec,
+                        confirmedInterestDates: newArr
+                    };
+                }
             }
             return rec;
         });

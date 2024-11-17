@@ -107,7 +107,7 @@ const RawDataTable: React.FC<RawDataTableProps> = ({recList, model, refreshModel
         {
             field: 'actions',
             type: 'actions',
-            headerName: "Actions",
+            headerName: "Delete",
             width: 80,
             getActions: ({id}) => {
                 return [

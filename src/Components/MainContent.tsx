@@ -246,7 +246,7 @@ const MainContent: React.FC<MainContentProps> = ({
                     </TabPanel>
                     {/*Get Money Date Tab*/}
                     <TabPanel value="1">
-                        <GetMoneyDateTable getMoneyList={getMoneyList}/>
+                        <GetMoneyDateTable getMoneyList={getMoneyList} model={model} refreshModel={refreshModel}/>
                     </TabPanel>
                 </TabContext>
             </Box>
